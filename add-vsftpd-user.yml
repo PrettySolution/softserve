@@ -24,7 +24,7 @@
         state: directory
       loop:
         - {path: '/home/{{vsftpd_user}}/ftp', owner: 'nobody', group: 'nobody', mode: 'a-w'}
-        - {path: '/home/{{vsftpd_user}}/ftp/files', owner: '{{vsftpd_user}}', group: '{{vsftpd_user}}', mode: '755'}
+        - {path: '/home/{{vsftpd_user}}/ftp/upload', owner: '{{vsftpd_user}}', group: '{{vsftpd_user}}', mode: '755'}
 
     - name: allow user to connect
       lineinfile:
