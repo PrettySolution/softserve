@@ -1,0 +1,25 @@
+---
+- name: Manage users on UNIX hosts
+  hosts: "{{ list_of_hosts|default('all') }}"
+  become: yes
+  vars:
+    management_user_settings:
+      name: management
+#      password: "{{management_user_pass}}"
+#      remove: yes # to remove  a user
+#      state: absent
+#      force: yes # when deleting a user
+      groups: ["wheel"]
+      comment: Ansible
+      shell: '/bin/bash'
+      authorized_keys: # according to management private key
+        - key: "{{management_user_authorized_key}}"
+          exclusive: yes
+      sudo:
+        hosts: ALL
+        as: ALL
+        commands: ALL
+        nopasswd: yes
+
+  roles:
+    - GROG.management-user
