@@ -1,6 +1,6 @@
 ---
 
-- name: update all packages
+- name: performing yum update
   yum:
     name: '*'
     state: latest
@@ -17,6 +17,11 @@
     ansible_facts.os_family == 'RedHat' and
     ansible_facts.distribution_major_version == '7'
 
+- name: install packages from a list
+  yum:
+    name: "{{item}}"
+    state: latest
+  loop: "{{managed_packages}}"
 
 #- debug:
 #    msg: "{{ansible_facts.os_family}} and {{ansible_facts.distribution_major_version}}"
