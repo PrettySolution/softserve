@@ -5,7 +5,7 @@
   vars:
     management_user_settings:
       name: management
-#      password: "{{management_user_pass}}"
+      password: "{{management_user_pass}}"
 #      remove: yes # to remove  a user
 #      state: absent
 #      force: yes # when deleting a user
