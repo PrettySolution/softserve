@@ -1,0 +1,12 @@
+---
+- name: add vsftpd user
+  hosts: "{{ list_of_hosts|default('all') }}"
+  become: yes
+  vars:
+    vsftpd_user: "test"
+    vsftpd_pass: "$6$GZOeA9hs$FczJ/RzG336h0EjA8AmxBt.OU/B4IOFEOWC21iqBQU1g5MZOr1qYNyRqQBtoN4c6P5oCfizc....3vte.zrKR0"
+  tasks:
+    - name: Add a user
+      user:
+        name: "{{vsftpd_user}}"
+        password: "{{vsftpd_pass}}"
