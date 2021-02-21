@@ -1,7 +1,7 @@
 ---
 - name: test Connection to my servers
   hosts: "{{ list_of_hosts|default('all') }}"
-#  become: yes
+  become: yes
 
 
   roles:
