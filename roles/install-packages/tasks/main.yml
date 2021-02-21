@@ -1,11 +1,11 @@
 ---
-#- name: Enable epel-release on Centos 7
-#  yum:
-#    name: epel-release
-#    state: latest
-#  when: |
-#    ansible_facts.os_family == 'RedHat' and
-#    ansible_facts.istribution_major_version == '7'
+- name: Enable epel-release on Centos 7
+  yum:
+    name: epel-release
+    state: latest
+  when: |
+    ansible_facts.os_family == 'RedHat' and
+    ansible_facts.distribution_major_version == '7'
 
-- debug:
-    msg: "{{ansible_facts.os_family}} and {{ansible_facts.distribution_major_version}}"
+#- debug:
+#    msg: "{{ansible_facts.os_family}} and {{ansible_facts.distribution_major_version}}"
