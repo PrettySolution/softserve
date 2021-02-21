@@ -1,0 +1,8 @@
+---
+- name: Manage Packages on Centos 7
+  hosts: "{{ list_of_hosts|default('all') }}"
+  become: yes
+
+
+  roles:
+    - install-packages
