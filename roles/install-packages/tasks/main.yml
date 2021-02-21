@@ -37,6 +37,14 @@
 
 - name: permit traffic in default zone for ftp service
   ansible.posix.firewalld:
+    service: ftp
+    permanent: yes
+    state: enabled
+  notify:
+    - restart firewalld
+
+- name: open 21 port
+  ansible.posix.firewalld:
     port: 21/tcp
     permanent: yes
     state: enabled
