@@ -1,35 +1,32 @@
 ---
-#- debug:
-#    msg: "{{ansible_facts.os_family}} and {{ansible_facts.distribution_major_version}}"
+- name: performing yum update
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+  when: |
+    ansible_facts.os_family == 'RedHat' and
+    ansible_facts.distribution_major_version == '7'
 
-#- name: performing yum update
-#  yum:
-#    name: '*'
-#    state: latest
-#    update_cache: yes
-#  when: |
-#    ansible_facts.os_family == 'RedHat' and
-#    ansible_facts.distribution_major_version == '7'
-#
-#- name: Enable epel-release on Centos 7
-#  yum:
-#    name: epel-release
-#    state: latest
-#  when: |
-#    ansible_facts.os_family == 'RedHat' and
-#    ansible_facts.distribution_major_version == '7'
-#
-#- name: install packages from a list
-#  yum:
-#    name: "{{item}}"
-#    state: latest
-#  loop: "{{managed_packages}}"
-#
-#- name: Enable vsftpd
-#  service:
-#    name: vsftpd
-#    enabled: true
-#    state: started
+- name: Enable epel-release on Centos 7
+  yum:
+    name: epel-release
+    state: latest
+  when: |
+    ansible_facts.os_family == 'RedHat' and
+    ansible_facts.distribution_major_version == '7'
+
+- name: install packages from a list
+  yum:
+    name: "{{item}}"
+    state: latest
+  loop: "{{managed_packages}}"
+
+- name: Enable vsftpd
+  service:
+    name: vsftpd
+    enabled: true
+    state: started
 
 - name: generate vsftpd config
   template:
@@ -40,7 +37,7 @@
 
 - name: permit traffic in default zone for ftp service
   ansible.posix.firewalld:
-    service: ftp
+    port: 21/tcp
     permanent: yes
     state: enabled
   notify:
