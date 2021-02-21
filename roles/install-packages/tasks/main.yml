@@ -31,23 +31,10 @@
 #    enabled: true
 #    state: started
 
-- lineinfile:
-    path: /etc/vsftpd/vsftpd.conf
-    regexp: "{{item.regexp}}"
-    line: "{{item.line}}"
-  loop:
-    - {regexp: '^(.*)anonymous_enable=(.*)$', line: 'anonymous_enable=NO'}
-    - {regexp: '^(.*)local_enable=(.*)$', line: 'local_enable=YES'}
-    - {regexp: '^(.*)write_enable=(.*)$', line: 'write_enable=YES'}
-    - {regexp: '^(.*)chroot_local_user=(.*)$', line: 'chroot_local_user=YES'}
-    - {regexp: '^(.*)allow_writeable_chroot=(.*)$', line: 'allow_writeable_chroot=YES'}
-    - {regexp: '^(.*)userlist_enable=(.*)$', line: 'userlist_enable=YES'}
-    - {regexp: '^(.*)userlist_file=(.*)$', line: 'userlist_file={{userlist_file_path}}'}
-    - {regexp: '^(.*)chroot_list_enable=(.*)$', line: 'chroot_list_enable=YES'}
-    - {regexp: '^(.*)chroot_list_file=(.*)$', line: 'chroot_list_file={{chroot_list_file_path}}'}
-    - {regexp: '^(.*)pasv_enable=(.*)$', line: 'pasv_enable=YES'}
-    - {regexp: '^(.*)pasv_min_port=(.*)$', line: 'pasv_min_port=10000'}
-    - {regexp: '^(.*)pasv_max_port=(.*)$', line: 'pasv_max_port=10001'}
+- name: generate vsftpd config
+  template:
+    src: vsftpd-conf.j2
+    dest: "/etc/vsftpd/vsftpd.conf"
   notify:
     - restart vsftpd
 
