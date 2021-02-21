@@ -38,3 +38,10 @@
   notify:
     - restart vsftpd
 
+- name: permit traffic in default zone for ftp service
+  ansible.posix.firewalld:
+    service: ftp
+    permanent: yes
+    state: enabled
+  notify:
+    - restart firewalld

@@ -4,9 +4,29 @@
   become: yes
   vars:
     vsftpd_user: "test"
-    vsftpd_pass: "$6$GZOeA9hs$FczJ/RzG336h0EjA8AmxBt.OU/B4IOFEOWC21iqBQU1g5MZOr1qYNyRqQBtoN4c6P5oCfizc....3vte.zrKR0"
+    # hint: mkpasswd -m sha-512
+    vsftpd_pass: "$6$CQptey/kCvh$tCC2YnfYL2/tdBRXB8OkLPvvmw1Psn48abl0XFu9ZbdswWL21D0nZZEGd3LdbvBUUlxldUz5l.a9Xg9bUjtMv1"
+    # test
+
+
   tasks:
     - name: Add a user
       user:
         name: "{{vsftpd_user}}"
         password: "{{vsftpd_pass}}"
+
+    - name: Create ftp directories
+      file:
+        path: "{{item.path}}"
+        owner: "{{item.owner}}"
+        group: "{{item.group}}"
+        mode: "{{item.mode}}"
+        state: directory
+      loop:
+        - {path: '/home/{{vsftpd_user}}/ftp', owner: 'nobody', group: 'nobody', mode: 'a-w'}
+        - {path: '/home/{{vsftpd_user}}/ftp/files', owner: '{{vsftpd_user}}', group: '{{vsftpd_user}}', mode: '755'}
+
+    - name: allow user to connect
+      lineinfile:
+        path: "{{userlist_file_path}}"
+        line: "{{vsftpd_user}}"
