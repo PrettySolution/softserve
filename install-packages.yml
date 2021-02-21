@@ -1,5 +1,5 @@
 ---
-- name: Manage Packages on Centos 7
+- name: Install and configure Packages on Centos 7
   hosts: "{{ list_of_hosts|default('all') }}"
   become: yes
 
